@@ -106,6 +106,7 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
   properties: {
     managedEnvironmentId: conatinerAppEnvironment.id
     configuration: {
+      
       ingress: {
         external: true
         targetPort: 3000
