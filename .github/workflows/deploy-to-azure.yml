@@ -1,0 +1,26 @@
+name: Deploy to Azure Container Apps
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Deploy to Azure Container Apps
+      run: |
+        az deployment group create \
+          --resource-group ${{ vars.AZURE_RG }} \
+          --template-file ./config/main.bicep \
+          --parameters namePrefix=${{ vars.AZURE_PREFIX }}
